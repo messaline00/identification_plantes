@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 import time
+import pandas as pd
 
 from utils.predict import (
     predict_taxon,
@@ -15,23 +16,32 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Identification d'une plante")
+st.title("🌿 Identification d'une plante")
 
-st.markdown(
-"""
-Chargez une image d'une feuille afin :
+st.markdown("""
+Chargez une image d'une feuille afin de :
 
-- d'identifier **l'espèce** de la plante
-- de déterminer si elle est **saine** ou **malade**
-"""
-)
+- identifier **l'espèce** de la plante
+- déterminer si elle est **saine** ou **malade**
+""")
+
+# -----------------------------
+# Initialisation de la session
+# -----------------------------
+
+if "prediction" not in st.session_state:
+    st.session_state.prediction = None
+
+# -----------------------------
+# Upload image
+# -----------------------------
 
 uploaded_file = st.file_uploader(
     "Choisissez une image",
     type=["jpg", "jpeg", "png"]
 )
 
-if uploaded_file:
+if uploaded_file is not None:
 
     image = Image.open(uploaded_file).convert("RGB")
 
@@ -41,50 +51,120 @@ if uploaded_file:
         width=350
     )
 
-if st.button("🔍 Lancer la prédiction"):
+    if st.button("Lancer la prédiction"):
 
-    with st.spinner("Analyse de l'image en cours..."):
+        with st.spinner("Analyse de l'image en cours..."):
 
-        start = time.time()
+            start = time.time()
 
-        taxon, score_taxon, top5_taxons = predict_taxon(image)
+            taxon, score_taxon, top5_taxons = predict_taxon(image)
 
-        maladie, score_maladie, top5_maladies = predict_disease(image)
+            maladie, score_maladie, top5_maladies = predict_disease(image)
 
-        end = time.time()
+            end = time.time()
 
-st.divider()
+            st.session_state.prediction = {
+                "taxon": taxon,
+                "score_taxon": score_taxon,
+                "top5_taxons": top5_taxons,
+                "maladie": maladie,
+                "score_maladie": score_maladie,
+                "top5_maladies": top5_maladies,
+                "temps": end - start
+            }
 
-col1, col2 = st.columns(2)
+# -----------------------------
+# Affichage des résultats
+# -----------------------------
 
-with col1:
+if st.session_state.prediction is not None:
 
-    st.subheader("🌿 Espèce détectée")
+    pred = st.session_state.prediction
 
-    st.success(taxon)
+    st.divider()
 
-    st.metric(
-        "Confiance",
-        f"{score_taxon*100:.2f}%"
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.subheader("🌿 Espèce détectée")
+
+        st.success(pred["taxon"])
+
+        st.metric(
+            "Confiance",
+            f"{pred['score_taxon']*100:.2f}%"
+        )
+
+    with col2:
+
+        st.subheader("Diagnostic")
+
+        maladie_nom = get_disease_name(pred["maladie"])
+
+        if get_health_status(pred["maladie"]):
+
+            st.success("🟢 Plante saine")
+
+            st.write(
+                "Aucun symptôme de maladie détecté."
+            )
+
+        else:
+
+            st.error("🔴 Plante malade")
+
+            st.write(
+                f"**Maladie détectée : {maladie_nom}**"
+            )
+
+        st.metric(
+            "Confiance",
+            f"{pred['score_maladie']*100:.2f}%"
+        )
+
+    st.info(
+        f"⏱ Temps de prédiction : {pred['temps']:.2f} seconde(s)"
     )
 
-with col2:
+    st.divider()
 
-    st.subheader("Diagnostic")
+    col3, col4 = st.columns(2)
 
-    maladie_nom = get_disease_name(maladie)
+    with col3:
 
-    if get_health_status(maladie):
+        st.subheader("Top 5 - Taxons")
 
-        st.success("🟢 Plante saine")
-        st.write("Aucun symptôme de maladie détecté.")
+        df_taxons = pd.DataFrame(
+            pred["top5_taxons"],
+            columns=["Taxon", "Probabilité"]
+        )
 
-    else:
+        df_taxons["Probabilité"] = (
+            df_taxons["Probabilité"] * 100
+        ).round(2).astype(str) + " %"
 
-        st.error("🔴 Plante malade")
-        st.write(f"**Maladie détectée : {maladie_nom}**")
+        st.dataframe(
+            df_taxons,
+            use_container_width=True,
+            hide_index=True
+        )
 
-    st.metric(
-        "Confiance",
-        f"{score_maladie*100:.2f}%"
-    )
+    with col4:
+
+        st.subheader("Top 5 - Maladies")
+
+        df_maladies = pd.DataFrame(
+            pred["top5_maladies"],
+            columns=["Maladie", "Probabilité"]
+        )
+
+        df_maladies["Probabilité"] = (
+            df_maladies["Probabilité"] * 100
+        ).round(2).astype(str) + " %"
+
+        st.dataframe(
+            df_maladies,
+            use_container_width=True,
+            hide_index=True
+        )
