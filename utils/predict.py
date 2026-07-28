@@ -23,16 +23,17 @@ eff_encoder = load_eff_label_encoder()
 
 def format_label(label):
     """
-    Transforme :
+    Transforme un label du type :
     tomato___late_blight
-    ->
+    en :
     Tomato - Late Blight
     """
 
-    label = label.replace("___", " - ")
-    label = label.replace("_", " ")
-
-    return label.title()
+    return (
+        label.replace("___", " - ")
+             .replace("_", " ")
+             .title()
+    )
 
 
 def get_health_status(disease_label):
