@@ -34,6 +34,19 @@ def format_label(label):
              .replace("_", " ")
              .title()
     )
+def get_disease_name(disease_label):
+    """
+    Extrait uniquement le nom de la maladie.
+
+    Exemple :
+    Tomato - Late Blight -> Late Blight
+    Apple - Healthy -> Healthy
+    """
+
+    if " - " in disease_label:
+        return disease_label.split(" - ", 1)[1]
+
+    return disease_label
 
 
 def get_health_status(disease_label):
