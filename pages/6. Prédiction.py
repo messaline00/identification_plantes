@@ -5,7 +5,8 @@ import time
 from utils.predict import (
     predict_taxon,
     predict_disease,
-    get_health_status
+    get_health_status,
+    get_disease_name
 )
 
 st.set_page_config(
@@ -69,40 +70,21 @@ with col1:
 
 with col2:
 
-    st.subheader("🦠 Diagnostic")
+    st.subheader("Diagnostic")
+
+    maladie_nom = get_disease_name(maladie)
 
     if get_health_status(maladie):
 
-        st.success(maladie)
+        st.success("🟢 Plante saine")
+        st.write("Aucun symptôme de maladie détecté.")
 
     else:
 
-        st.error(maladie)
+        st.error("🔴 Plante malade")
+        st.write(f"**Maladie détectée : {maladie_nom}**")
 
     st.metric(
         "Confiance",
         f"{score_maladie*100:.2f}%"
     )
-
-st.info(
-    f"Temps de prédiction : {end-start:.2f} seconde(s)"
-)
-st.subheader("Top 5 - Taxons")
-
-for classe, prob in top5_taxons:
-
-    st.write(
-        f"**{classe}** : {prob*100:.2f}%"
-    )
-
-    st.progress(prob)
-
-st.subheader("Top 5 - Maladies")
-
-for classe, prob in top5_maladies:
-
-    st.write(
-        f"**{classe}** : {prob*100:.2f}%"
-    )
-
-    st.progress(prob)
