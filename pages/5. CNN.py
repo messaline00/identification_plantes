@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pathlib import Path
 import pandas as pd
+import plotly.express as px
 
 st.title("Réseaux de neurones convolutifs (CNN)")
 
@@ -37,7 +38,8 @@ with tab_tl:
     """
 )
 
-
+    
+    
     st.subheader("Méthodologie — Paramètres du Transfer Learning")
 
     df_transfer = pd.DataFrame({
@@ -85,6 +87,10 @@ with tab_tl:
 
     st.dataframe(df_transfer, use_container_width=True, hide_index=True)
 
+    st.write("""
+    Après une première phase où seul le classifieur est entraîné, les dernières couches
+    de chaque architecture sont dégelées afin d'adapter les représentations aux images de plantes.
+    """)
 
     st.subheader("Méthodologie — Paramètres du Fine-Tuning")
 
@@ -124,3 +130,172 @@ with tab_tl:
     })
 
     st.dataframe(df_finetuning, use_container_width=True, hide_index=True)
+
+        # =====================================================
+    # RESULTATS
+    # =====================================================
+
+    st.divider()
+
+    st.subheader("Résultats")
+
+    if "show_results" not in st.session_state:
+        st.session_state.show_results = False
+
+    if st.button("Afficher / Masquer les résultats"):
+        st.session_state.show_results = not st.session_state.show_results
+
+
+    if st.session_state.show_results:
+
+        # ==========================
+        # TAXONS
+        # ==========================
+
+        st.subheader("Classification des taxons")
+
+        df_taxons = pd.DataFrame({
+            "Architecture": [
+                "ResNet50",
+                "EfficientNet-B3",
+                "DenseNet121"
+            ],
+            "Accuracy Test (%)": [
+                99.77,
+                99.62,
+                99.56
+            ],
+            "F1-score Test (%)": [
+                99.77,
+                99.67,
+                99.61
+            ]
+        })
+
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                label="Meilleur modèle",
+                value="ResNet50"
+            )
+
+        with col2:
+            st.metric(
+                label="Accuracy Test",
+                value="99.77 %"
+            )
+
+
+        fig_taxons = px.bar(
+            df_taxons,
+            x="Architecture",
+            y="Accuracy Test (%)",
+            text="Accuracy Test (%)",
+            title="Accuracy Test - Classification des taxons",
+        )
+
+        fig_taxons.update_traces(
+            marker_color="#8FBC8F",
+            textposition="outside"
+        )
+
+        fig_taxons.update_layout(
+            yaxis_range=[95,100],
+            yaxis_title="Accuracy (%)",
+            xaxis_title="",
+            showlegend=False,
+            height=450
+        )
+
+        st.plotly_chart(
+            fig_taxons,
+            use_container_width=True
+        )
+
+
+        st.success(
+            "ResNet50 obtient les meilleures performances pour "
+            "l'identification des taxons avec une Accuracy Test de 99,77 %."
+        )
+
+
+        st.divider()
+
+
+        # ==========================
+        # MALADIES
+        # ==========================
+
+        st.subheader("Classification des maladies")
+
+
+        df_maladies = pd.DataFrame({
+            "Architecture": [
+                "EfficientNet-B3",
+                "ResNet50",
+                "DenseNet121"
+            ],
+            "Accuracy Test (%)": [
+                99.22,
+                99.08,
+                98.78
+            ],
+            "F1-score Test (%)": [
+                99.15,
+                98.99,
+                98.68
+            ]
+        })
+
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric(
+                label="Meilleur modèle",
+                value="EfficientNet-B3"
+            )
+
+        with col2:
+            st.metric(
+                label="Accuracy Test",
+                value="99.22 %"
+            )
+
+
+        fig_maladies = px.bar(
+            df_maladies,
+            x="Architecture",
+            y="Accuracy Test (%)",
+            text="Accuracy Test (%)",
+            title="Accuracy Test - Classification des maladies",
+        )
+
+
+        fig_maladies.update_traces(
+            marker_color="#8FBC8F",  # vert clair
+            textposition="outside"
+        )
+
+
+        fig_maladies.update_layout(
+            yaxis_range=[95,100],
+            yaxis_title="Accuracy (%)",
+            xaxis_title="",
+            showlegend=False,
+            height=450
+        )
+
+
+        st.plotly_chart(
+            fig_maladies,
+            use_container_width=True
+        )
+
+
+        st.success(
+            "EfficientNet-B3 obtient les meilleures performances pour "
+            "l'identification des maladies avec une Accuracy Test de 99,22 %."
+        )
