@@ -8,6 +8,7 @@ from theme import (
     warning_box,
     success_box,
     kpi_row,
+    white_card,
 )
 
 # =====================================================
@@ -213,27 +214,102 @@ if page == pages[0]:
 
 elif page == pages[1]:
 
-    st.header("Base TAXONS")
+    st.header("Base TAXONS / Base MALADIES")
 
     info_box(
         """
-        Cette base contient 14 espèces végétales et permet
-        l'identification automatique du taxon à partir d'une image.
+        
+        🌿 <b>Base TAXONS</b> : identification de l'espèce végétale.<br>
+        🍃 <b>Base MALADIES</b> : identification de l'état phytosanitaire
+        de la feuille.
         """
     )
 
 
-# =====================================================
-# BASE MALADIES
-# =====================================================
+    # =====================================================
+    # COMPARAISON DES BASES
+    # =====================================================
 
-elif page == pages[2]:
+    st.subheader("Comparaison des deux tâches de classification")
 
-    st.header("Base MALADIES")
 
-    info_box(
-        """
-        Cette base contient 38 classes correspondant aux différents
-        états sanitaires des plantes, incluant les classes saines.
-        """
-    )
+    col1, sep, col2 = st.columns([1, 0.03, 1])
+
+
+    with col1:
+
+        st.markdown("### 🌿 Base TAXONS")
+
+        st.markdown(
+            """
+            **Objectif**  
+            Reconnaître l'espèce végétale.
+
+            **Nombre de classes**  
+            14 taxons.
+
+            **Difficulté principale**  
+            Déséquilibre important entre espèces.
+
+            **Classe majoritaire**  
+            Tomate : 25 814 images
+
+            **Classe minoritaire**  
+            Courge : 2 170 images
+
+            **Ratio important**  
+            12 ×
+            """
+        )
+
+        st.image(
+            "images/Exploration/distribution_taxons.png",
+            caption="Distribution des classes TAXONS",
+            use_container_width=True
+        )
+    with sep:
+
+        st.markdown(
+            """
+            <div style="
+                height: 850px;
+                border-left: 1px solid #DCDAE8;
+                margin: auto;
+            ">
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+
+    with col2:
+
+        st.markdown("### 🍃 Base MALADIES")
+
+        st.markdown(
+            """
+            **Objectif**  
+            Identifier l'état sanitaire de la plante
+
+            **Nombre de classes**  
+            38 classes
+
+            **Difficulté principale**  
+            Variabilité importante des symptômes visibles
+
+            **Classe majoritaire**  
+            Orange — citrus greening : 5 507 images
+
+            **Classe minoritaire**  
+            Maïs — cercospora : 2 052 images
+
+            **Ratio modéré**  
+            2,7 ×
+            """
+        )
+
+        st.image(
+            "images/Exploration/distribution_maladies.png",
+            caption="Distribution des classes MALADIES",
+            use_container_width=True
+        )
