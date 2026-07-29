@@ -30,9 +30,8 @@ st.sidebar.title("Exploration des données")
 
 pages = [
     "Construction des bases",
-    "Base TAXONS",
-    "Base MALADIES"
-]
+    "Analyse des bases"]
+  
 
 page = st.sidebar.radio(
     "Choisir une section",
@@ -230,7 +229,7 @@ elif page == pages[1]:
     # COMPARAISON DES BASES
     # =====================================================
 
-    st.subheader("Comparaison des deux tâches de classification")
+    st.subheader("Comparaison des deux bases de données")
 
 
     col1, sep, col2 = st.columns([1, 0.03, 1])
@@ -313,3 +312,43 @@ elif page == pages[1]:
             caption="Distribution des classes MALADIES",
             use_container_width=True
         )
+
+    # =====================================================
+    # ANALYSE COMPLÉMENTAIRE
+    # =====================================================
+
+    st.divider()
+
+
+    st.subheader("Segmentation HSV")
+
+
+    st.markdown(
+        """
+        Dans les approches classiques de vision par ordinateur, une segmentation
+        HSV permet d'isoler l'objet d'intérêt.
+
+        Pour notre corpus, elle n'est pas nécessaire :
+        
+        - fond uniforme et fort contraste avec la feuille 
+        - risque de supprimer les symptômes colorés (jaune, brun, noir)
+        - les CNN extraient directement les caractéristiques utiles depuis les images RGB.
+        """
+    )
+
+    st.image(
+                "images/Exploration/HSV.png",
+                caption="Exemple de segmentation HSV",
+                use_container_width=True
+            )
+
+    st.subheader("Conclusion de l'analyse exploratoire")
+
+    success_box(
+        """
+        ✓ Corpus dédupliqué et homogène<br>
+        ✓ Aucune segmentation nécessaire<br>
+        ✓ Prétraitement limité au redimensionnement, à la normalisation
+        et à la gestion du déséquilibre des classes.
+        """
+    )
