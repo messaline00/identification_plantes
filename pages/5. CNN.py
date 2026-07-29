@@ -278,7 +278,83 @@ with tab_tl:
         )
 
 
-        st.divider()
+
+        # =====================================================
+        # ANALYSE DETAILLEE
+        # =====================================================
+
+        with st.expander("Analyse approfondie du modèle ResNet50"):
+
+            tab1, tab2, tab3 = st.tabs(
+                [
+                    "Courbes d'entraînement",
+                    "Matrice de confusion",
+                    "Grad-CAM"
+                ]
+            )
+
+            # =====================================================
+            # COURBES
+            # =====================================================
+
+            with tab1:
+
+                st.write(
+                    "Évolution de l'Accuracy et de la Loss au cours de l'entraînement."
+                )
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.image(
+                        "images/CNN/resnet50_accuracy.png",
+                        caption="Accuracy (train / validation)",
+                        use_container_width=True
+                    )
+
+                with col2:
+                    st.image(
+                        "images/CNN/resnet50_loss.png",
+                        caption="Loss (train / validation)",
+                        use_container_width=True
+                    )
+
+            # =====================================================
+            # MATRICE DE CONFUSION
+            # =====================================================
+
+            with tab2:
+
+                st.write(
+                    "Matrice de confusion obtenue sur le jeu de test."
+                )
+
+                st.image(
+                    "images/CNN/resnet50_confusion_matrix.png",
+                    caption="Matrice de confusion - ResNet50",
+                    use_container_width=True
+                )
+
+            # =====================================================
+            # GRAD-CAM
+            # =====================================================
+
+            with tab3:
+
+                st.write(
+                    """
+                    Les cartes **Grad-CAM** mettent en évidence les régions de l'image
+                    ayant le plus contribué à la décision du modèle.
+                    """
+                )
+
+                st.image(
+                    "images/CNN/resnet50_gradcam.png",
+                    caption="Exemples de visualisations Grad-CAM obtenues avec ResNet50",
+                    use_container_width=True
+                )
+
+                
 
 
         # ==========================
@@ -357,10 +433,82 @@ with tab_tl:
             "l'identification des maladies avec une Accuracy Test de 99,22 %."
         )
 
+                # =====================================================
+        # ANALYSE DETAILLEE
+        # =====================================================
 
-# =====================================================
-# CONCLUSION
-# =====================================================
+        with st.expander("Analyse approfondie du modèle EfficientNet-B3"):
+
+            tab1, tab2, tab3 = st.tabs(
+                [
+                    "Courbes d'entraînement",
+                    "Matrice de confusion",
+                    "Grad-CAM"
+                ]
+            )
+
+            # =====================================================
+            # COURBES
+            # =====================================================
+
+            with tab1:
+
+                st.write(
+                    "Évolution de l'Accuracy et de la Loss au cours de l'entraînement."
+                )
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.image(
+                        "images/CNN/efficientnet_accuracy.png",
+                        caption="Accuracy (train / validation)",
+                        use_container_width=True
+                    )
+
+                with col2:
+                    st.image(
+                        "images/CNN/efficientnet_loss.png",
+                        caption="Loss (train / validation)",
+                        use_container_width=True
+                    )
+
+            # =====================================================
+            # MATRICE DE CONFUSION
+            # =====================================================
+
+            with tab2:
+
+                st.write(
+                    "Matrice de confusion obtenue sur le jeu de test."
+                )
+
+                st.image(
+                    "images/CNN/efficientnet_confusion_matrix.png",
+                    caption="Matrice de confusion - EfficientNet-B3",
+                    use_container_width=True
+                )
+
+            # =====================================================
+            # GRAD-CAM
+            # =====================================================
+
+            with tab3:
+
+                st.write(
+                    """
+                    Les cartes **Grad-CAM** mettent en évidence les régions de l'image
+                    ayant le plus contribué à la décision du modèle.
+                    """
+                )
+
+                st.image(
+                    "images/CNN/efficientnet_gradcam.png",
+                    caption="Exemples de visualisations Grad-CAM obtenues avec EfficientNet-B3",
+                    use_container_width=True
+                )
+
+
 
 # =====================================================
 # CONCLUSION
