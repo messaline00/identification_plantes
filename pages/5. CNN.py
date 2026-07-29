@@ -6,8 +6,9 @@ import plotly.express as px
 
 st.title("Réseaux de neurones convolutifs (CNN)")
 
-tab_baseline, tab_tl = st.tabs(["CNN Baseline", "Transfer Learning"])
-
+tab_baseline, tab_tl, tab_conclusion = st.tabs(
+    ["CNN Baseline", "Transfer Learning", "Conclusion"]
+)
 # =====================================================
 # CNN BASELINE
 # =====================================================
