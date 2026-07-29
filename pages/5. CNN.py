@@ -15,7 +15,63 @@ with tab_baseline:
 
     st.header("CNN Baseline")
 
-    st.write("À compléter...")
+    st.info(
+        """
+        Un **CNN** a été entraîné indépedamment pour les tâches de
+        **classification des taxons** et des **maladies** afin de servir de
+        modèle de référence (*baseline*).
+
+        L'objectif est d'obtenir une architecture légère et rapide, qui sera
+        ensuite comparée aux modèles de **Transfer Learning**.
+        """
+    )
+
+    st.subheader("Méthodologie — Architecture et paramètres")
+
+    df_baseline = pd.DataFrame({
+        "Paramètre": [
+            "Taille des images",
+            "Rescaling",
+            "Architecture",
+            "Global Pooling",
+            "Couche Dense",
+            "Dropout",
+            "Sortie",
+            "Optimiseur",
+            "Fonction de perte",
+            "EarlyStopping",
+            "Nombre d'époques max",
+            "Nombre de paramètres"
+        ],
+        "Valeur": [
+            "96 × 96",
+            "1/255",
+            "3 blocs Conv2D + MaxPooling (32, 64, 128 filtres)",
+            "GlobalAveragePooling2D",
+            "128 neurones",
+            "0.3",
+            "Softmax",
+            "Adam",
+            "SparseCategoricalCrossentropy",
+            "Patience = 3 (restauration des meilleurs poids)",
+            "15",
+            "~112 000"
+        ]
+    })
+
+    st.dataframe(
+        df_baseline,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    st.write(
+        """
+        Le même réseau est entraîné séparément sur les jeux de données
+        **Taxons** et **Maladies**
+        """
+    )
+
 
 # =====================================================
 # TRANSFER LEARNING
