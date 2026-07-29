@@ -190,6 +190,55 @@ if page == pages[3]:
 ######### XG BOOST ####################################################
 if page == pages[4]:
   st.header("🚀 XG Boost")
+  onglet2, onglet3, onglet4 = st.tabs(["Taxons", "Maladies", "Conclusion"])
+
+  with onglet2:
+    st.write("Sur les bases des taxons")
+    resultats = pd.DataFrame({
+      "Accuracy": [0.857, 0.859],
+      "F1-macro": [0.851, 0.839],
+      "Ecart train/val": ['13,8 pt', '13,8 pt']}, index=["Pixels", "HOG"])
+    st.table(resultats)
+    st.markdown("Sur les pixels bruts (32×32, aplatis), XGBoost atteint **85,7 %** d'accuracy et un F1 macro de **0,851** sur le test, pondération des classes (sample_weight) appliquée pour compenser le déséquilibre 12×. **pepper_bell** reste la classe la plus difficile (F1 0,69), suivie d'**apple** (0,77) et **potato** (0,79) ; à l'inverse, **maize** (0,95), **grape** (0,94) et **orange** (0,93) sont les mieux reconnues. La matrice de confusion confirme une diagonale dominante partout, avec une légère tendance de confusion vers **tomato**, la classe la plus fréquente du jeu d'entraînement.")
+    st.markdown("Sur les features HOG, XGBoost atteint 85,9 % d'accuracy et un F1 macro de 0,839 — accuracy quasi identique aux pixels bruts (85,7 %), mais F1 macro légèrement en retrait (0,839 contre 0,851). HOG n'est donc pas strictement meilleur : il redistribue la performance différemment selon les classes plutôt que d'améliorer uniformément. **pepper_bell** progresse nettement (F1 0,69 → 0,81) — cohérent avec HOG, qui capte la forme des feuilles plutôt que leur couleur. À l'inverse, **blueberry** (0,86 → 0,71) et **raspberry** (0,81 → 0,76) reculent sensiblement : ces baies se distinguent probablement davantage par la couleur que par la forme, un signal que HOG jette précisément en travaillant sur l\'image en niveaux de gris. La matrice de confusion confirme une diagonale dominante partout, sans confusion isolée qui domine le reste.")
+    with st.expander("Courbes d'apprentissage"):
+      st.markdown("**Courbe d'apprentissage sur les pixels bruts**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "taxons_pix_courbes.png", width = 500)
+      st.markdown("Le train atteint une accuracy quasi parfaite (**0,99**) et une loss proche de 0 (**0,09**) après **300** arbres — comportement attendu pour XGBoost, chaque arbre corrigeant mécaniquement les erreurs du précédent. La validation plafonne nettement plus bas (accuracy **0,86**, loss **0,45**) mais continue de progresser légèrement jusqu'au dernier arbre, sans jamais se stabiliser complètement ni se dégrader : pas de signe de surapprentissage brutal, seulement l'écart structurel habituel entre train et validation pour ce type de modèle sur des pixels bruts sans structure spatiale exploitée.")
+      st.markdown("**Courbe d'apprentissage sur les HOG**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "taxons_hog_courbes.png", width = 500)
+      st.markdown("Le train atteint une accuracy quasi parfaite (99,7 %) et une loss proche de 0 (0,068) après 300 arbres. La validation plafonne à 85,9 % d'accuracy et 0,45 de loss, en légère progression continue jusqu'au dernier arbre, sans dégradation. L'écart train/validation (13,8 points) est quasiment identique à celui observé sur les pixels bruts (13,8 points également) — malgré ses 1 764 dimensions contre 64, HOG ne réduit ni n'aggrave ce schéma structurel : même comportement d'écart de généralisation, sans signe de dégradation active de la validation.")
+    with st.expander("Matrices de confusion"):
+      st.markdown("**Matrice de confusion sur les pixels bruts**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "taxons_pix_confusion.png", width = 500)
+      st.markdown("**Matrice de confusion sur les HOG**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "taxons_hog_confusion.png", width = 500)
+      
+  with onglet3:
+    st.write("Sur les bases des maladies")
+    resultats = pd.DataFrame({
+      "Accuracy": [0.824, 0.755],
+      "F1-macro": [0.814, 0.743],
+      "Ecart train/val": ['17,5 pt', '24,4 pt']}, index=["Pixels", "HOG"])
+    st.table(resultats)
+    st.markdown("Sur les pixels bruts (32×32, aplatis), XGBoost atteint **82,4 %** d'accuracy et un F1 macro de **0,814** sur les 38 classes, pondération appliquée pour compenser le déséquilibre. Les classes les mieux reconnues sont concentrées chez **maize** (common_rust et healthy à 0,99) et **orange___haunglongbing_citrus_greening** (0,94, la classe la plus fournie du test). À l'inverse, la faiblesse se concentre nettement sur les maladies de **tomato** — early_blight et septoria_leaf_spot (F1 ≈ 0,63), late_blight (0,67), target_spot (0,69) — ainsi que **potato___late_blight** (précision 0,58). Cette concentration des erreurs au sein d'une même espèce, plutôt qu'un éparpillement aléatoire, est cohérente avec une réelle similarité visuelle entre plusieurs maladies foliaires (taches, brûlures) que 32×32 pixels bruts peinent à distinguer. La matrice de confusion confirme une diagonale dominante partout, sans paire de confusion isolée qui domine le reste.")
+    st.markdown("Sur les features HOG, XGBoost atteint 75,5 % d'accuracy et un F1 macro de 0,743 — nettement en retrait par rapport aux pixels bruts sur cette même base (82,4 % / 0,814, soit -6,9 et -7,1 points). C'est un recul bien plus marqué que celui observé sur TAXONS (F1 macro -1,2 point seulement), un signal clair que HOG pénalise MALADIES spécifiquement. L'explication la plus probable tient à la nature même de la tâche : contrairement à TAXONS, où il faut distinguer des espèces aux formes de feuilles différentes, MALADIES doit repérer des symptômes qui se manifestent presque toujours par un changement de **couleur ou de texture de surface** (jaunissement, taches, brunissement) sur une feuille dont la forme reste identique entre l'état sain et malade. HOG travaille en niveaux de gris et jette précisément ce signal. Le sous-groupe tomato, déjà le plus faible sous pixels bruts, s'effondre encore davantage : septoria_leaf_spot (0,63 → 0,42), target_spot (0,69 → 0,51), late_blight (0,67 → 0,54), leaf_mold (0,77 → 0,62). À l'inverse, les classes déjà fortes et morphologiquement bien identifiables restent solides (maize, orange___haunglongbing_citrus_greening, soybean___healthy).")
+    with st.expander("Courbes d'apprentissage"):
+      st.markdown("**Courbe d'apprentissage sur les pixels bruts**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "maladies_pix_courbes.png", width = 500)
+      st.markdown("Le train atteint un ajustement parfait (merror = 0, mlogloss ≈ 0,014) dès l'arbre environ **225 **— mémorisation complète des 67 000+ images d'entraînement, sur les 38 classes. La validation continue de progresser légèrement jusqu'au dernier arbre sans jamais se dégrader, mais plafonne à **82,5** % d'accuracy et 0,58 de loss : un écart train/validation d'environ 17,5 points, plus marqué que celui observé sur TAXONS (~13 points). Cohérent avec la granularité plus fine de la tâche (38 classes contre 14) : plus de place pour que le modèle capture des détails propres au train qui ne se généralisent pas à l'identique. Même lecture que pour TAXONS — écart de généralisation, pas de dégradation active de la validation — probablement la limite intrinsèque des pixels bruts face à un nombre de classes élevé et visuellement proches, plus qu'un problème de réglage.")
+      st.markdown("**Courbe d'apprentissage sur les HOG**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "maladies_hog_courbes.png", width = 500)
+      st.markdown("Le train atteint un ajustement parfait (accuracy ≈ 100 %, loss ≈ 0,02) dès l'arbre ~100. La validation plafonne à 75,6 % d'accuracy et 0,81 de loss, en légère progression continue jusqu'au dernier arbre, sans dégradation — l'écart train/validation atteint 24,4 points, le plus large des quatre combinaisons testées (contre 13,8 points pour Pixels et HOG sur TAXONS, et 17,5 points pour Pixels sur MALADIES). Ce n'est pas un excès de mémorisation différent des trois autres runs — le train touche déjà 100 % partout, XGBoost a systématiquement la capacité de tout apprendre par cœur quel que soit le jeu de features. L'écart plus large ici vient du plafond de validation plus bas (75,6 % contre 82,5-85,9 % ailleurs), cohérent avec la lecture déjà posée sur la matrice de confusion : HOG retire précisément le signal couleur dont MALADIES a le plus besoin, ce qui limite ce que le modèle peut extraire, sans que ça change sa capacité à mémoriser le train.")
+    with st.expander("Matrices de confusion"):
+      st.markdown("**Matrice de confusion sur les pixels bruts**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "maladies_pix_confusion.png", width = 500)
+      st.markdown("**Matrice de confusion sur les HOG**")
+      st.image(BASE_DIR / "images" / "ML_XGB" / "maladies_hog_confusion.png", width = 500)
+
+  with onglet4:
+    st.markdown("Les pixels bruts l'emportent sur les deux bases en F1 macro — de justesse sur TAXONS (-1,2 point pour HOG), nettement sur MALADIES (-7,1 points, et l'écart train/validation le plus large des quatre combinaisons). HOG encode la forme des contours à partir d'une image en niveaux de gris : il jette la couleur, information secondaire pour distinguer des espèces aux silhouettes différentes (TAXONS), mais souvent le signal principal des symptômes de maladie (jaunissement, taches, brunissement) sur une feuille dont la forme ne change pas (MALADIES). Ce projet confirme que la couleur porte plus d'information utile que la forme pour détecter des maladies.")
+
 
 ######### CONCLUSIONS ####################################################
 if page == pages[5]:
