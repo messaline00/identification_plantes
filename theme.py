@@ -172,3 +172,76 @@ PLOTLY_LAYOUT = dict(
     paper_bgcolor="white",
     margin=dict(l=10, r=10, t=50, b=10),
 )
+
+# =====================================================
+# BOXES PERSONNALISÉES
+# =====================================================
+
+def info_box(text):
+    st.markdown(
+        f"""
+        <div style="
+            background-color:{WHITE};
+            border-left:6px solid {TEAL};
+            border-radius:10px;
+            padding:1rem 1.2rem;
+            margin:1rem 0;
+            color:{DARK};
+            line-height:1.6;
+        ">
+            {text}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def warning_box(text):
+    st.markdown(
+        f"""
+        <div style="
+            background-color:{WHITE};
+            border-left:6px solid {RED};
+            border-radius:10px;
+            padding:1rem 1.2rem;
+            margin:1rem 0;
+            color:{DARK};
+            line-height:1.6;
+        ">
+            <span style="
+                color:{RED};
+                font-weight:700;
+            ">
+                ⚠
+            </span>
+            &nbsp;
+            {text}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def success_box(text):
+    st.markdown(
+        f"""
+        <div style="
+            background-color:{WHITE};
+            border-left:6px solid {TEAL};
+            border-radius:10px;
+            padding:1rem 1.2rem;
+            margin:1rem 0;
+            color:{DARK};
+            line-height:1.6;
+        ">
+            <span style="
+                color:{GREEN};
+                font-weight:700;
+            ">
+            </span>
+            &nbsp;
+            {text}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
