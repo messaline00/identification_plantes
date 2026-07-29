@@ -1,24 +1,56 @@
 import streamlit as st
+import sys
+from pathlib import Path
 
-st.set_page_config(
-    page_title="Reconnaisance plantes",
-    page_icon="",
-    layout="wide"
-)
+sys.path.append(str(Path(__file__).parent.parent))
+from theme import inject_css, TEAL, INDIGO, DARK
+import data_content as d
 
-st.title("Reconnaissance des plantes et des maladies")
+inject_css()
 
-st.markdown("""
-## Présentation du projet
+st.markdown("<div style='height: 4vh'></div>", unsafe_allow_html=True)
 
-Ce projet a pour objectif de :
+col1, col2, col3 = st.columns([1, 3, 1])
+with col2:
+    st.markdown(
+        f"<p style='text-align:center; color:{TEAL}; font-weight:700; "
+        f"letter-spacing:0.15em; font-size:0.85rem;'>PROJET FIL ROUGE — SOUTENANCE</p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"<h1 style='text-align:center; color:{INDIGO}; font-size:2.6rem;'>"
+        f"Identification des taxons et diagnostic des maladies des plantes par Deep Learning</h1>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"<p style='text-align:center; color:{TEAL}; font-style:italic; font-size:1.1rem;'>"
+        f"Machine Learning · CNN baseline · CNN optimisés (transfer learning)</p>",
+        unsafe_allow_html=True,
+    )
 
-- Identifier le taxon d'une plante à partir d'une photo 
-- Identifier l'état sanaitaire d'une plante à partir d'une photo
+    st.markdown("<div style='height: 3vh'></div>", unsafe_allow_html=True)
 
-Nous avons comparé plusieurs approches :
+    st.markdown(
+        f"""
+        <div style='background-color:{INDIGO}; border-radius:10px; padding:1.3rem 1.6rem;'>
+        <p style='color:white; font-size:1.05rem; margin:0;'>
+        À partir d'une <b>seule photo de feuille</b>, peut-on identifier automatiquement
+        l'espèce d'une plante et détecter la présence d'une maladie, avec une fiabilité
+        suffisante pour aider un utilisateur non expert ?
+        </p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-- Machine Learning
-- CNN
-- Transfer Learning
-""")
+    st.markdown("<div style='height: 3vh'></div>", unsafe_allow_html=True)
+    st.markdown(
+        f"<p style='text-align:center; color:{DARK};'><b>{d.TEAM}</b></p>",
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        f"<p style='text-align:center; color:{TEAL};'>"
+        f"{d.CORPUS_FINAL:,} images · {d.TAXONS_N_CLASSES} taxons · {d.MALADIES_N_CLASSES} classes de maladies</p>"
+        .replace(",", " "),
+        unsafe_allow_html=True,
+    )
