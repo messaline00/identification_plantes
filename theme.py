@@ -245,3 +245,21 @@ def success_box(text):
         """,
         unsafe_allow_html=True,
     )
+
+def white_card(text):
+    st.markdown(
+        f"""
+        <div style="
+            background-color:{WHITE};
+            border:1px solid #E5E5E5;
+            border-radius:10px;
+            padding:1.2rem;
+            margin-top:0.5rem;
+            color:{DARK};
+            line-height:1.6;
+        ">
+            {text}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
