@@ -356,3 +356,101 @@ with tab_tl:
             "EfficientNet-B3 obtient les meilleures performances pour "
             "l'identification des maladies avec une Accuracy Test de 99,22 %."
         )
+
+
+# =====================================================
+# CONCLUSION
+# =====================================================
+
+# =====================================================
+# CONCLUSION
+# =====================================================
+
+with tab_conclusion:
+
+    st.header("Conclusion")
+
+    st.info(
+        """
+        • Le CNN Baseline améliore l'Accuracy de près de **10 points**
+        par rapport à XGBoost. 
+
+        • Les modèles de Transfer Learning apportent un gain supplémentaire,
+        atteignant des Accuracy supérieures à **99 %**.
+        """
+    )
+
+
+
+    st.divider()
+
+    # =====================================================
+    # TAXONS
+    # =====================================================
+
+    st.subheader("🌿 Classification des taxons")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Accuracy", "85.90 %")
+        st.caption("XGBoost")
+
+    with col2:
+        st.metric("Accuracy", "95.60 %")
+        st.caption("CNN Baseline")
+
+    with col3:
+        st.markdown(
+            "<h1 style='text-align:center;color:green;'>99.77 %</h1>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<p style='text-align:center;'><b>ResNet50 ✅</b></p>",
+            unsafe_allow_html=True
+        )
+
+    st.divider()
+
+    # =====================================================
+    # MALADIES
+    # =====================================================
+
+    st.subheader("🍃 Classification des maladies")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric("Accuracy", "82.40 %")
+        st.caption("XGBoost")
+
+    with col2:
+        st.metric("Accuracy", "95.77 %")
+        st.caption("CNN Baseline")
+
+    with col3:
+        st.markdown(
+            "<h1 style='text-align:center;color:green;'>99.22 %</h1>",
+            unsafe_allow_html=True
+        )
+        st.markdown(
+            "<p style='text-align:center;'><b>EfficientNet-B3 ✅</b></p>",
+            unsafe_allow_html=True
+        )
+
+    st.divider()
+
+    st.success(
+        """
+        **Modèles retenus pour la phase de prédiction**
+
+        Les meilleurs compromis entre précision et capacité de généralisation sont :
+
+        ✅ **ResNet50** pour la **classification des taxons**
+
+        ✅ **EfficientNet-B3** pour la **classification des maladies**
+
+        Ces deux modèles sont ceux intégrés dans l'application pour réaliser
+        les prédictions sur de nouvelles images.
+        """
+    )
