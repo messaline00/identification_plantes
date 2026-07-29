@@ -66,13 +66,171 @@ with tab_baseline:
         hide_index=True
     )
 
-    st.write(
-        """
-        Le même réseau est entraîné séparément sur les jeux de données
-        **Taxons** et **Maladies**
-        """
-    )
 
+    # =====================================================
+    # RESULTATS
+    # =====================================================
+
+    st.divider()
+
+    st.subheader("Résultats")
+
+    if "show_results_baseline" not in st.session_state:
+        st.session_state.show_results_baseline = False
+
+    if st.button("Afficher / Masquer les résultats", key="baseline_results"):
+        st.session_state.show_results_baseline = (
+            not st.session_state.show_results_baseline
+        )
+
+    if st.session_state.show_results_baseline:
+
+        # =====================================================
+        # TAXONS
+        # =====================================================
+
+        st.subheader("Classification des taxons")
+
+        col1, col2= st.columns(2)
+
+        with col1:
+            st.metric("Accuracy Test", "95,60 %")
+
+        with col2:
+            st.metric("F1-macro", "95,70 %")
+
+    
+
+        st.success(
+            """
+            Le CNN Baseline atteint une **Accuracy de 95,60 %** sur le jeu de test,
+            avec un **F1-macro de 95,7 %**. Toutes les classes obtiennent un
+            F1-score supérieur à **0,93**, y compris les classes rares
+            (*blueberry*, *raspberry* et *squash*), ce qui constitue une nette
+            amélioration par rapport aux modèles de Machine Learning.
+            """
+        )
+
+        with st.expander("Analyse approfondie du CNN Baseline"):
+
+            tab1, tab2 = st.tabs(
+                [
+                    "Courbes d'entraînement",
+                    "Matrice de confusion"
+                ]
+            )
+
+            # ==========================================
+            # COURBES
+            # ==========================================
+
+            with tab1:
+
+                st.write(
+                    "Évolution de l'Accuracy et de la Loss au cours de l'entraînement."
+                )
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.image(
+                        "images/CNN/baseline_taxons_accuracy.png",
+                        caption="Accuracy (train / validation)",
+                        use_container_width=True
+                    )
+
+                with col2:
+                    st.image(
+                        "images/CNN/baseline_taxons_loss.png",
+                        caption="Loss (train / validation)",
+                        use_container_width=True
+                    )
+
+            # ==========================================
+            # MATRICE DE CONFUSION
+            # ==========================================
+
+            with tab2:
+
+                st.image(
+                    "images/CNN/baseline_taxons_confusion_matrix.png",
+                    caption="Matrice de confusion - CNN Baseline (Taxons)",
+                    use_container_width=True
+                )
+
+        st.divider()
+
+        # =====================================================
+        # MALADIES
+        # =====================================================
+
+        st.subheader("🍃 Classification des maladies")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric("Accuracy Test", "95,77 %")
+
+        with col2:
+            st.metric("F1-macro", "95,60 %")
+
+
+
+        st.success(
+            """
+            Le CNN Baseline atteint une **Accuracy de 95,77 %** sur le jeu de test,
+            avec un **F1-macro de 95,6 %**. Les performances les plus faibles
+            concernent certaines maladies de la tomate (*target_spot*,
+            *early_blight* et *late_blight*).
+            """
+        )
+
+        with st.expander("Analyse approfondie du CNN Baseline"):
+
+            tab1, tab2 = st.tabs(
+                [
+                    "Courbes d'entraînement",
+                    "Matrice de confusion"
+                ]
+            )
+
+            # ==========================================
+            # COURBES
+            # ==========================================
+
+            with tab1:
+
+                st.write(
+                    "Évolution de l'Accuracy et de la Loss au cours de l'entraînement."
+                )
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.image(
+                        "images/CNN/baseline_maladies_accuracy.png",
+                        caption="Accuracy (train / validation)",
+                        use_container_width=True
+                    )
+
+                with col2:
+                    st.image(
+                        "images/CNN/baseline_maladies_loss.png",
+                        caption="Loss (train / validation)",
+                        use_container_width=True
+                    )
+
+            # ==========================================
+            # MATRICE DE CONFUSION
+            # ==========================================
+
+            with tab2:
+
+                st.image(
+                    "images/CNN/baseline_maladies_confusion_matrix.png",
+                    caption="Matrice de confusion - CNN Baseline (Maladies)",
+                    use_container_width=True
+                )
 
 # =====================================================
 # TRANSFER LEARNING
