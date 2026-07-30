@@ -263,3 +263,21 @@ def white_card(text):
         """,
         unsafe_allow_html=True,
     )
+
+def solutions_box(text):
+    st.markdown(
+        f"""
+        <div style="
+            background-color:{INDIGO};
+            border-left:6px solid {INDIGO};
+            border-radius:10px;
+            padding:1rem 1.2rem;
+            margin:1rem 0;
+            color:{WHITE};
+            line-height:1.6;
+        ">
+            {text}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
