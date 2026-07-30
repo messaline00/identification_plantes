@@ -4,11 +4,34 @@ from pathlib import Path
 import pandas as pd
 import plotly.express as px
 
-st.title("Réseaux de neurones convolutifs (CNN)")
+from theme import (
+    inject_css,
+    chapter_banner,
+    info_box,
+    warning_box,
+    success_box,
+    kpi_row,
+    white_card,
+)
+
+# =====================================================
+# THÈME
+# =====================================================
+
+inject_css()
+
+chapter_banner(
+    "03",
+    "Réseaux de neurones convolutifs (CNN)",
+    "")
 
 tab_baseline, tab_tl, tab_conclusion = st.tabs(
     ["CNN Baseline", "Transfer Learning", "Conclusion"]
 )
+
+
+
+
 # =====================================================
 # CNN BASELINE
 # =====================================================
@@ -16,7 +39,7 @@ with tab_baseline:
 
     st.header("CNN Baseline")
 
-    st.info(
+    info_box(
         """
         Un **CNN** a été entraîné indépedamment pour les tâches de
         **classification des taxons** et des **maladies** afin de servir de
@@ -88,8 +111,9 @@ with tab_baseline:
         # =====================================================
         # TAXONS
         # =====================================================
+   
 
-        st.subheader("Classification des taxons")
+        st.subheader("🌿Classification des taxons")
 
         col1, col2= st.columns(2)
 
@@ -99,9 +123,8 @@ with tab_baseline:
         with col2:
             st.metric("F1-macro", "95,70 %")
 
-    
-
-        st.success(
+        with st.container(border=True):
+            st.markdown(
             """
             Le CNN Baseline atteint une **Accuracy de 95,60 %** sur le jeu de test,
             avec un **F1-macro de 95,7 %**. Toutes les classes obtiennent un
@@ -109,7 +132,7 @@ with tab_baseline:
             (*blueberry*, *raspberry* et *squash*), ce qui constitue une nette
             amélioration par rapport aux modèles de Machine Learning.
             """
-        )
+    )
 
         with st.expander("Analyse approfondie du CNN Baseline"):
 
@@ -164,7 +187,7 @@ with tab_baseline:
         # MALADIES
         # =====================================================
 
-        st.subheader("🍃 Classification des maladies")
+        st.subheader("🍃Classification des maladies")
 
         col1, col2 = st.columns(2)
 
@@ -176,7 +199,8 @@ with tab_baseline:
 
 
 
-        st.success(
+        with st.container(border=True):
+            st.markdown(
             """
             Le CNN Baseline atteint une **Accuracy de 95,77 %** sur le jeu de test,
             avec un **F1-macro de 95,6 %**. Les performances les plus faibles
@@ -239,7 +263,7 @@ with tab_tl:
 
     st.header("Transfer Learning")
 
-    st.info(
+    info_box(
     """
     Trois architectures de **Transfer Learning** pré-entraînées sur **ImageNet** ont été évaluées
     pour la classification des **taxons** et des **maladies** des plantes :
@@ -249,11 +273,7 @@ with tab_tl:
     - **EfficientNet-B3**
 
     Chaque modèle suit la même méthodologie : apprentissage par transfert, puis
-    **fine-tuning** des dernières couches afin de les adapter aux images végétales.
-    """
-)
-
-    
+    **fine-tuning** des dernières couches afin de les adapter aux images végétales.""")
     
     st.subheader("Méthodologie — Paramètres du Transfer Learning")
 
@@ -367,7 +387,7 @@ with tab_tl:
         # TAXONS
         # ==========================
 
-        st.subheader("Classification des taxons")
+        st.subheader("🌿Classification des taxons")
 
         df_taxons = pd.DataFrame({
             "Architecture": [
@@ -429,10 +449,11 @@ with tab_tl:
             use_container_width=True
         )
 
-
-        st.success(
+        
+        with st.container(border=True):
+                    st.markdown(
             "ResNet50 obtient les meilleures performances pour "
-            "l'identification des taxons avec une Accuracy Test de 99,77 %."
+            "l'identification des taxons avec une **Accuracy Test de 99,77 %.**"
         )
 
 
@@ -519,7 +540,7 @@ with tab_tl:
         # MALADIES
         # ==========================
 
-        st.subheader("Classification des maladies")
+        st.subheader("🍃Classification des maladies")
 
 
         df_maladies = pd.DataFrame({
@@ -586,9 +607,10 @@ with tab_tl:
         )
 
 
-        st.success(
+        with st.container(border=True):
+            st.markdown(
             "EfficientNet-B3 obtient les meilleures performances pour "
-            "l'identification des maladies avec une Accuracy Test de 99,22 %."
+            "l'identification des maladies avec une **Accuracy Test de 99,22 %**."
         )
 
                 # =====================================================
@@ -676,7 +698,7 @@ with tab_conclusion:
 
     st.header("Conclusion")
 
-    st.info(
+    info_box(
         """
         • Le CNN Baseline améliore l'Accuracy de près de **10 points**
         par rapport à XGBoost. 
@@ -746,7 +768,7 @@ with tab_conclusion:
 
     st.divider()
 
-    st.success(
+    success_box(
         """
         **Modèles retenus pour la phase de prédiction**
 
