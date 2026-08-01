@@ -105,8 +105,13 @@ if st.session_state.prediction is not None:
 
         st.metric(
             "Confiance",
-            f"{pred['score_taxon']*100:.2f}%"
-        )
+        f"{pred['score_taxon']*100:.2f}%"
+    )
+
+        if pred["score_taxon"] < 0.60:
+            st.warning(
+                "⚠️ Confiance faible : l'espèce est peut-être en dehors des 14 espèces connues du modèle."
+            )
 
     with col2:
 
@@ -134,6 +139,11 @@ if st.session_state.prediction is not None:
             "Confiance",
             f"{pred['score_maladie']*100:.2f}%"
         )
+
+        if pred["score_maladie"] < 0.60:
+            st.warning(
+                "⚠️ Confiance faible : le diagnostic est incertain."
+            )
 
     st.info(
         f"⏱ Temps de prédiction : {pred['temps']:.2f} seconde(s)"
