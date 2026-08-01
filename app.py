@@ -17,11 +17,22 @@ with col2:
         f"letter-spacing:0.15em; font-size:0.85rem;'>PROJET FIL ROUGE — SOUTENANCE</p>",
         unsafe_allow_html=True,
     )
+    
     st.markdown(
-        f"<h1 style='text-align:center; color:{INDIGO}; font-size:2.6rem;'>"
-        f"Identification des taxons et diagnostic des maladies des plantes par Deep Learning</h1>",
-        unsafe_allow_html=True,
-    )
+    f"""
+    <h1 style="
+        color:{INDIGO};
+        font-size:2.2rem;
+        text-align:center;
+        line-height:1.35;
+        font-weight:700;
+    ">
+    Identification des plantes et détection des maladies foliaires<br>
+    par apprentissage automatique et réseaux de neurones convolutifs
+    </h1>
+    """,
+    unsafe_allow_html=True,)
+    
     st.markdown(
         f"<p style='text-align:center; color:{TEAL}; font-style:italic; font-size:1.1rem;'>"
         f"Machine Learning · CNN baseline · CNN optimisés (transfer learning)</p>",

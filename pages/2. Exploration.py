@@ -18,7 +18,7 @@ from theme import (
 inject_css()
 
 chapter_banner(
-    "05",
+    "02",
     "Exploration des données",
     "")
 
@@ -352,3 +352,5 @@ elif page == pages[1]:
         et à la gestion du déséquilibre des classes.
         """
     )
+
+    

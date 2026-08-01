@@ -435,11 +435,6 @@ with tab2:
         """
     )
 
-    st.divider()
-
-    st.subheader("Meilleur modèle — XGBoost")
-
-
 
 
 # =====================================================
