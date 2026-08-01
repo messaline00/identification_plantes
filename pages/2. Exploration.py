@@ -172,6 +172,31 @@ if page == pages[0]:
     st.divider()
 
 
+
+
+    st.subheader("Exemples d'images du corpus")
+
+    st.markdown(
+    """
+    Quelques exemples illustrant la diversité des espèces et des états sanitaires
+    présents dans le corpus.
+    """
+    )
+
+    # cols = st.columns(4)
+
+    # # images = [
+    # #     ("images/Exploration/ex1.jpg", "Tomate saine"),
+    # #     ("images/Exploration/ex2.jpg", "Pommier - Rouille"),
+    # #     ("images/Exploration/ex3.jpg", "Maïs - Cercospora"),
+    # #     ("images/Exploration/ex4.jpg", "Pêcher sain"),
+    # # ]
+
+    # for col, (img, cap) in zip(cols, images):
+    #     with col:
+    #         st.image(img, caption=cap, use_container_width=True)
+
+
     # =====================================================
     # BASES GÉNÉRÉES
     # =====================================================
@@ -342,7 +367,52 @@ elif page == pages[1]:
                 use_container_width=True
             )
 
+
+    st.divider()
+
+    st.subheader("Distribution de l'intensité lumineuse")
+
+    st.markdown(
+    """
+    La luminosité moyenne des images a été calculée afin de vérifier
+    l'homogénéité globale des conditions d'acquisition.
+
+    La distribution montre que la majorité des images présentent une exposition
+    correcte, avec très peu d'images extrêmement sombres ou très lumineuses.
+    """
+    )
+
+    st.image(
+        "images/Exploration/luminosite.png",
+        caption="Distribution de la luminosité moyenne des images",
+        use_container_width=True
+    )
+
+    kpi_row(
+        [
+            {
+                "value": "18",
+                "label": "MINIMUM",
+                "sub": "image la plus sombre",
+            },
+            {
+                "value": "119",
+                "label": "MOYENNE",
+                "sub": "intensité moyenne",
+            },
+            {
+                "value": "244",
+                "label": "MAXIMUM",
+                "sub": "image la plus claire",
+            },
+        ]
+    )
+
+    st.divider()
+
     st.subheader("Conclusion de l'analyse exploratoire")
+
+
 
     success_box(
         """
