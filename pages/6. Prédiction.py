@@ -13,11 +13,19 @@ from utils.predict import (
     get_disease_name
 )
 
-st.set_page_config(
-    page_title="Prédiction",
-    page_icon="🌿",
-    layout="wide"
-)
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent))
+from theme import inject_css, chapter_banner, hypo_row, kpi_row
+import data_content as d
+
+inject_css()
+chapter_banner(
+    "06",
+    "Prédictions",
+    "")
+
 
 st.title("🌿 Identification d'une plante")
 
@@ -172,45 +180,45 @@ if st.session_state.prediction is not None:
             use_container_width=True,
             hide_index=True
         )
-st.divider()
+    st.divider()
 
-st.subheader("Interprétation des modèles")
+    st.subheader("Interprétation des modèles")
 
-col_grad1, col_grad2 = st.columns(2)
+    col_grad1, col_grad2 = st.columns(2)
 
 
-with col_grad1:
+    with col_grad1:
 
-    st.markdown(
-        "### ResNet50 - Identification de l'espèce"
-    )
-
-    with st.spinner("Calcul Grad-CAM ResNet50..."):
-
-        gradcam_resnet = generate_resnet_gradcam(
-            pred["image"]
+        st.markdown(
+            "### ResNet50 - Identification de l'espèce"
         )
 
-    st.image(
-        gradcam_resnet,
-        caption="Zones utilisées pour identifier l'espèce",
-        use_container_width=True
-    )
+        with st.spinner("Calcul Grad-CAM ResNet50..."):
 
+            gradcam_resnet = generate_resnet_gradcam(
+                pred["image"]
+            )
 
-with col_grad2:
-
-    st.markdown(
-        "### EfficientNet-B3 - Diagnostic maladie"
-    )
-
-    with st.spinner("Calcul Grad-CAM EfficientNet..."):
-
-        gradcam_eff = generate_efficientnet_gradcam(
-            pred["image"]
+        st.image(
+            gradcam_resnet,
+            caption="Zones utilisées pour identifier l'espèce",
+            use_container_width=True
         )
 
-    st.image(
-        gradcam_eff,
-        caption="Zones utilisées pour identifier l'état sanitaire de la plante",
-        use_container_width=True)
+
+    with col_grad2:
+
+        st.markdown(
+            "### EfficientNet-B3 - Diagnostic maladie"
+        )
+
+        with st.spinner("Calcul Grad-CAM EfficientNet..."):
+
+            gradcam_eff = generate_efficientnet_gradcam(
+                pred["image"]
+            )
+
+        st.image(
+            gradcam_eff,
+            caption="Zones utilisées pour identifier l'état sanitaire de la plante",
+            use_container_width=True)

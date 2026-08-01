@@ -115,7 +115,22 @@ CNN_OPT_BEST_MALADIES = "EfficientNet-B3"
 # --- Hypotheses (version courante : 2 retenues) ---
 HYPOTHESES = [
     {
-        "id": "H1",
+            "id": "H1",
+            "titre": "CNN optimisé",
+            "enonce": "Le CNN optimisé par transfer learning obtient de meilleures performances que les autres modèles pour l'identification du taxon et le diagnostic de la maladie.",
+            "verdict": "confirmee",
+            "verdict_label": "Confirmée",
+            "constat": (
+                "+4,17 points sur TAXONS (95,60 % → 99,77 % avec ResNet50) et +3,45 points sur "
+                "MALADIES (95,77 % → 99,22 % avec EfficientNet-B3) par rapport au CNN baseline — "
+                "l'écart est encore plus net face au Machine Learning classique, plafonné à 85,9 % "
+                "et 82,4 %. La convergence est aussi plus rapide : dès la phase tête gelée, les "
+                "modèles pré-entraînés dépassent déjà 97 % d'accuracy, là où le baseline part de "
+                "41 % et met 15 epochs à converger."
+            ),
+        },
+    {
+        "id": "H2",
         "titre": "Morphologie",
         "enonce": "Les caractéristiques visuelles des feuilles permettent d'identifier automatiquement l'espèce avec une précision élevée.",
         "verdict": "partielle",
@@ -134,23 +149,23 @@ HYPOTHESES = [
             "donc, mais un échantillon encore trop restreint (n=6) pour valider l'hypothèse "
             "dans son ensemble."
         ),
-    },
-    {
-        "id": "H2",
-        "titre": "CNN optimisé",
-        "enonce": "Le CNN optimisé par transfer learning obtient de meilleures performances que les autres modèles pour l'identification du taxon et le diagnostic de la maladie.",
-        "verdict": "confirmee",
-        "verdict_label": "Confirmée",
-        "constat": (
-            "+4,17 points sur TAXONS (95,60 % → 99,77 % avec ResNet50) et +3,45 points sur "
-            "MALADIES (95,77 % → 99,22 % avec EfficientNet-B3) par rapport au CNN baseline — "
-            "l'écart est encore plus net face au Machine Learning classique, plafonné à 85,9 % "
-            "et 82,4 %. La convergence est aussi plus rapide : dès la phase tête gelée, les "
-            "modèles pré-entraînés dépassent déjà 97 % d'accuracy, là où le baseline part de "
-            "41 % et met 15 epochs à converger."
-        ),
-    },
+    }
+    
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # --- Comparaison globale ---
 GLOBAL_COMPARISON = [
