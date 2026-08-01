@@ -32,26 +32,6 @@ st.header("Conclusion")
 st.subheader("Bilan des hypothèses")
 
 
-kpi_row(
-    [
-        {
-            "value": "70 %",
-            "label": "ENTRAÎNEMENT",
-            "sub": "",
-        },
-        {
-            "value": "15 %",
-            "label": "VALIDATION",
-            "sub": "",
-        },
-        {
-            "value": "15 %",
-            "label": "TEST",
-            "sub": "",
-        },
-    ]
-)
-
 hypo_row(
     [
         {
@@ -83,42 +63,6 @@ hypo_row(
     ]
 )
 
-# =====================================================
-# CE QUE LE PROJET A MONTRÉ
-# =====================================================
-
-st.subheader("Ce que le projet a montré")
-
-kpi_row(
-    [
-        {
-            "value": "85,9 %",
-            "label": "MACHINE LEARNING",
-            "sub": "XGBoost · TAXONS",
-        },
-        {
-            "value": "95,6 %",
-            "label": "CNN BASELINE",
-            "sub": "TAXONS",
-        },
-        {
-            "value": "99,77 %",
-            "label": "TRANSFER LEARNING",
-            "sub": "ResNet50 · TAXONS",
-        },
-    ]
-)
-
-st.markdown("""
-La comparaison met en évidence une progression nette des performances :
-les modèles de Machine Learning classique sont dépassés par le CNN de
-référence, puis par les architectures pré-entraînées.
-
-Le transfer learning permet ainsi d'atteindre les meilleures performances
-sur les deux tâches, avec des F1-scores supérieurs à 98 %.
-""")
-
-
 st.divider()
 
 
@@ -135,8 +79,8 @@ with col1:
         """
         ⚠️ Conditions d'acquisition
 
-        Les données d'entraînement et de test sont relativement standardisées.
-        Les performances obtenues ne garantissent donc pas la même robustesse
+        Les données d'entraînement et de test ont été obtenues dans des contitions standarsisées (fond, luminausité).
+        Les performances obtenues ne garantissent donc pas la même robustesse 
         sur des photographies de terrain.
         """
     )
@@ -195,9 +139,7 @@ large d'images provenant de conditions d'acquisition et de sources variées.
 par une méthode plus robuste pour identifier les images ne correspondant pas
 aux classes apprises.
 
-• **L'optimisation du déploiement** — étudier la distillation de connaissances,
-la quantification ou la compression des modèles afin de réduire leur coût
-computationnel.
+
 """)
 
 
