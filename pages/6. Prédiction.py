@@ -13,11 +13,19 @@ from utils.predict import (
     get_disease_name
 )
 
-st.set_page_config(
-    page_title="Prédiction",
-    page_icon="🌿",
-    layout="wide"
-)
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).parent.parent))
+from theme import inject_css, chapter_banner, hypo_row, kpi_row
+import data_content as d
+
+inject_css()
+chapter_banner(
+    "06",
+    "Prédictions",
+    "")
+
 
 st.title("🌿 Identification d'une plante")
 
