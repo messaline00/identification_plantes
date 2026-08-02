@@ -221,15 +221,15 @@ with tab2:
         ],
 
         "Accuracy": [
-            37.3, 53.4,
-            63.1, 68.0,
-            71.4, 69.82,
-            85.7, 85.9,
+            26.4, 50.2,
+            59.4, 63.5,
+            69.9, 68.1,
+            85.1, 83.9,
 
-            33.6, 31.0,
-            65.5, 54.6,
-            67, 60,
-            82.4, 75.5
+            31.0, 28.8,
+            54.6, 56.8,
+            66.1, 57.9,
+            81.4, 74.3
         ]
     })
 
@@ -318,8 +318,8 @@ with tab2:
             """
             **XGBoost obtient les meilleures performances sur les deux bases.**
 
-            - 🌿 **TAXONS : 85,9 %** avec HOG
-            - 🦠 **MALADIES : 82,4 %** avec les pixels bruts
+            - 🌿 **TAXONS : 85,1 %** avec pixels bruts
+            - 🦠 **MALADIES : 81,4 %** avec les pixels bruts
 
             Les modèles linéaires (**régression logistique** et **SGD/SVM**) restent
             nettement en retrait, tandis que **Random Forest** améliore les performances
@@ -353,11 +353,11 @@ with tab2:
 
         with c1:
             st.metric("Pixels — Test", "71 %")
-            st.caption("Train : 🔴 100 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
         with c2:
             st.metric("HOG — Test", "70 %")
-            st.caption("Train : 🔴 100 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
 
     with col2:
@@ -368,11 +368,11 @@ with tab2:
 
         with c1:
             st.metric("Pixels — Test", "86 %")
-            st.caption("Train : 🔴 ≈ 99 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
         with c2:
             st.metric("HOG — Test", "86 %")
-            st.caption("Train : 🔴 99,7 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
 
     # =====================================================
@@ -391,11 +391,11 @@ with tab2:
 
         with c1:
             st.metric("Pixels — Test", "67 %")
-            st.caption("Train : 🔴 100 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
         with c2:
             st.metric("HOG — Test", "66 %")
-            st.caption("Train : 🔴 100 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
 
     with col2:
@@ -410,7 +410,7 @@ with tab2:
 
         with c2:
             st.metric("HOG — Test", "76 %")
-            st.caption("Train : 🔴 100 %")
+            st.caption("Train : 🔴 ≈ 100 %")
 
 
     # =====================================================
@@ -454,19 +454,21 @@ with tab3:
 
     with st.container(border=True):
 
+    
         st.markdown(
             """
             **L'efficacité de HOG dépend de la tâche.**
 
-            🌿 **TAXONS :** HOG est légèrement meilleur que les pixels
-            (**85,9 % vs 85,7 %**), car les contours et la morphologie des feuilles
-            sont des informations discriminantes.
+            🌿 **TAXONS :** les **pixels bruts** obtiennent un léger avantage sur HOG
+            (**85,1 % vs 83,9 %**), même si les deux représentations offrent des
+            performances élevées pour distinguer les espèces.
 
-            🦠 **MALADIES :** les pixels sont nettement meilleurs
-            (**82,4 % vs 75,5 %**), car HOG conserve moins bien les informations
-            de **couleur et de texture** liées aux symptômes.
+            🦠 **MALADIES :** les **pixels bruts** sont nettement meilleurs
+            (**81,4 % vs 74,3 %**), car HOG préserve moins bien les informations de
+            **couleur** et de **texture** caractéristiques des symptômes.
 
-             **HOG est donc adapté à la morphologie, mais moins pertinent pour identifier les maladies.**
+            **HOG reste une représentation pertinente pour la morphologie des feuilles,
+            mais les pixels bruts sont plus adaptés, en particulier pour la détection des maladies.**
             """
         )
 
@@ -496,11 +498,11 @@ with tab3:
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric("Accuracy", "85,90 %")
+        st.metric("F1-score", "83.9 %")
         st.caption("XGBoost — HOG")
 
     with col2:
-        st.metric("Accuracy", "85,70 %")
+        st.metric("F1-score", "85,1 %")
         st.caption("XGBoost — Pixels bruts")
 
 
@@ -512,13 +514,14 @@ with tab3:
 
     col1, col2 = st.columns(2)
 
+    
     with col1:
-        st.metric("Accuracy", "82,40 %")
-        st.caption("XGBoost — Pixels bruts")
+        st.metric("F1-score", "73,3 %")
+        st.caption("XGBoost — HOG")
 
     with col2:
-        st.metric("Accuracy", "75,50 %")
-        st.caption("XGBoost — HOG")
+            st.metric("F1-score", "81,4 %")
+            st.caption("XGBoost — Pixels bruts")
 
 
     # =====================================================
@@ -534,7 +537,7 @@ with tab3:
         l'aplatissement des pixels perd la structure spatiale, tandis que HOG perd
         une partie de l'information chromatique.
 
-        **XGBoost atteint 85,9 % sur TAXONS et 82,4 % sur MALADIES**, mais présente
+        **XGBoost atteint 85,1 % sur TAXONS et 81,4 % sur MALADIES**, mais présente
         également un écart important entre les performances d'entraînement et de test.
 
         Ces limites justifient l'utilisation de **réseaux de neurones convolutifs (CNN)**,
