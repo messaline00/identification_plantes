@@ -126,11 +126,9 @@ d'espèces, de maladies et d'images prises dans des conditions réelles.
 
 st.divider()
 
-info_box(
+st.success(
     """
-<b>Bilan final</b><br><br>
 Ce projet montre qu'il est possible d'identifier une plante et de détecter une maladie foliaire à partir d'une simple image lorsque l'espèce appartient au domaine d'apprentissage du modèle.
-<br><br>
 La principale difficulté n'est plus la performance sur le jeu de test, mais la capacité du modèle à reconnaître ses propres limites lorsqu'il est confronté à des situations nouvelles.
 """
 )
