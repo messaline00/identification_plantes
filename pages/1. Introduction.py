@@ -46,9 +46,8 @@ hypo_row([
     {"title": f"{h['id']} · {h['titre']}", "body": h["enonce"]} for h in d.HYPOTHESES
 ])
 
-st.markdown("exemples d'images")
 st.image(
-    "images/introduction/mosaique.png",
+    "images/mosaique.png",
     use_container_width=True,
     caption="Exemples d'images utilisées dans le corpus."
 )

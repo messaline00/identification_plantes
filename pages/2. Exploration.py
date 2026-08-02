@@ -183,6 +183,18 @@ if page == pages[0]:
     """
     )
 
+    st.image(
+    "images/conditions.png",
+    use_container_width=True,
+    caption="Exemples d'images utilisées dans le corpus."
+)
+
+    st.markdown(
+        """
+        On observe que les images n'ont pas étées prises en conditions naturelles
+        """
+        )
+
     # cols = st.columns(4)
 
     # # images = [
