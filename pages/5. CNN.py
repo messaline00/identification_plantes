@@ -418,7 +418,7 @@ with tab_tl:
 
         with col2:
             st.metric(
-                label="Accuracy Test",
+                label="F1-score",
                 value="99.77 %"
             )
 
@@ -453,7 +453,7 @@ with tab_tl:
         with st.container(border=True):
                     st.markdown(
             "ResNet50 obtient les meilleures performances pour "
-            "l'identification des taxons avec une **Accuracy Test de 99,77 %.**"
+            "l'identification des taxons avec un **F1-score de 99,77 %.**"
         )
 
 
@@ -572,8 +572,8 @@ with tab_tl:
 
         with col2:
             st.metric(
-                label="Accuracy Test",
-                value="99.22 %"
+                label="F1-score",
+                value="99.15 %"
             )
 
 
@@ -610,7 +610,7 @@ with tab_tl:
         with st.container(border=True):
             st.markdown(
             "EfficientNet-B3 obtient les meilleures performances pour "
-            "l'identification des maladies avec une **Accuracy Test de 99,22 %**."
+            "l'identification des maladies avec un **F1-score de 99,15 %**."
         )
 
                 # =====================================================
@@ -721,11 +721,11 @@ with tab_conclusion:
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric("Accuracy", "85.90 %")
+        st.metric("F1-score", "85.10 %")
         st.caption("XGBoost")
 
     with col2:
-        st.metric("Accuracy", "95.60 %")
+        st.metric("F1-score", "95.70 %")
         st.caption("CNN Baseline")
 
     with col3:
@@ -749,16 +749,16 @@ with tab_conclusion:
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric("Accuracy", "82.40 %")
+        st.metric("F1-score", "81.40 %")
         st.caption("XGBoost")
 
     with col2:
-        st.metric("Accuracy", "95.77 %")
+        st.metric("F1-score", "95.60 %")
         st.caption("CNN Baseline")
 
     with col3:
         st.markdown(
-            "<h1 style='text-align:center;color:green;'>99.22 %</h1>",
+            "<h1 style='text-align:center;color:green;'>99.15 %</h1>",
             unsafe_allow_html=True
         )
         st.markdown(
