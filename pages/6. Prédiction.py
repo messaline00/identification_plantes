@@ -43,6 +43,7 @@ Chargez une image d'une feuille afin de :
 if "prediction" not in st.session_state:
     st.session_state.prediction = None
 
+
 # -----------------------------
 # Upload image
 # -----------------------------
@@ -51,6 +52,11 @@ uploaded_file = st.file_uploader(
     "Choisissez une image",
     type=["jpg", "jpeg", "png"]
 )
+
+# Supprimer les résultats si l'image est retirée
+if uploaded_file is None:
+    st.session_state.prediction = None
+
 
 if uploaded_file is not None:
 
