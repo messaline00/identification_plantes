@@ -281,3 +281,15 @@ def solutions_box(text):
         """,
         unsafe_allow_html=True,
     )
+hypo_row(
+    [
+        {
+            "title": "Test H1",
+            "body": "Texte simple"
+        },
+        {
+            "title": "Test H2",
+            "body": "Texte simple"
+        },
+    ]
+)

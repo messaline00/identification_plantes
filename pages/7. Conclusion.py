@@ -1,29 +1,24 @@
 import streamlit as st
-import pandas as pd
-from pathlib import Path
-import pandas as pd
-import plotly.express as px
 
 from theme import (
     inject_css,
     chapter_banner,
-    info_box,
-    warning_box,
     success_box,
-    kpi_row,
-    white_card,
-    hypo_row
+    hypo_row,
+    info_box
 )
-
-
 
 # =====================================================
 # CONCLUSION
 # =====================================================
 
-st.header("Conclusion")
+inject_css()
 
-
+chapter_banner(
+    "07",
+    "Conclusion",
+    ""
+)
 
 # =====================================================
 # HYPOTHÈSES
@@ -31,40 +26,38 @@ st.header("Conclusion")
 
 st.subheader("Bilan des hypothèses")
 
-
 hypo_row(
     [
         {
             "title": "H1 · CNN optimisé — CONFIRMÉE",
             "body": """
-            Le <b>transfer learning</b> surpasse le CNN entraîné from scratch
-            ainsi que les modèles de Machine Learning classique sur les deux tâches.
+            Le <b>transfer learning</b> surpasse le CNN Baseline
+            ainsi que les modèles de Machine Learning sur les deux tâches de classification.
             <br><br>
-            <b>TAXONS :</b> +4,17 points<br>
-            95,60 % → 99,77 %
+            <b>TAXONS :</b> +14,67 points<br>
+            85,1 % → 95,60 % → 99,77 %
             <br><br>
-            <b>MALADIES :</b> +3,45 points<br>
-            95,77 % → 99,22 %
+            <b>MALADIES :</b> +18,27 points<br>
+            81,4 % → 95,80 % → 99,67 %
             """,
         },
         {
             "title": "H2 · Morphologie — PARTIELLEMENT CONFIRMÉE",
             "body": """
-            Les caractéristiques morphologiques apportent une information
-            discriminante pour l'identification des espèces.
-            <br><br>
-            <b>ResNet50 :</b> 99,77 % d'accuracy<br>
-            <b>XGBoost + HOG :</b> 85,9 % d'accuracy
-            <br><br>
-            En conditions réelles, <b>4/4 espèces connues</b> ont été correctement
-            identifiées, mais la détection des cas hors périmètre reste imparfaite.
-            """,
+            Hypothèse validée sur les données de test.
+
+            Le modèle exploite principalement la morphologie, mais aussi parfois le contexte de l'image.
+
+            Les espèces hors du domaine d'apprentissage restent une limite importante.
+
+            Une forte confiance ne garantit pas qu'une prédiction soit correcte.
+            """
+            
         },
     ]
 )
 
 st.divider()
-
 
 # =====================================================
 # LIMITES
@@ -72,56 +65,42 @@ st.divider()
 
 st.subheader("Limites identifiées")
 
-col1, col2 = st.columns(2)
+limites = [
+    (
+        "### Conditions d'acquisition\n\n"
+        "Les modèles ont été entraînés et évalués sur des images prises dans des conditions relativement standardisées (fond, cadrage, luminosité).\n\n"
+        "Leur capacité de généralisation à des photographies de terrain reste donc limitée."
+    ),
+    (
+        "### Détection de l'inconnu\n\n"
+        "Une espèce ou une maladie absente du jeu d'entraînement peut être classée comme une classe connue avec une confiance élevée.\n\n"
+        "Le seuil de confiance utilisé ne permet donc pas, à lui seul, de détecter les cas hors périmètre."
+    ),
+    (
+        "### Interprétabilité\n\n"
+        "Les cartes Grad-CAM montrent que le modèle s'appuie parfois sur des éléments du fond de l'image en plus des caractéristiques de la feuille.\n\n"
+        "Ces résultats doivent donc être interprétés avec prudence."
+    ),
+    (
+        "### Confusions entre classes\n\n"
+        "Certaines espèces ou maladies présentant des caractéristiques visuelles proches restent difficiles à distinguer.\n\n"
+        "Ces similarités peuvent conduire à des erreurs de classification."
+    ),
+]
 
-with col1:
-    info_box(
-        """
-        ⚠️ Conditions d'acquisition
+for i in range(0, len(limites), 2):
 
-        Les données d'entraînement et de test ont été obtenues dans des contitions standarsisées (fond, luminausité).
-        Les performances obtenues ne garantissent donc pas la même robustesse 
-        sur des photographies de terrain.
-        """
-    )
+    col1, col2 = st.columns(2)
 
-with col2:
-    info_box(
-        """
-        ⚠️ Détection de l'inconnu
+    with col1:
+        with st.container(border=True):
+            st.markdown(limites[i])
 
-        Un modèle peut produire une prédiction incorrecte avec une confiance
-        élevée. Le simple seuil de confiance utilisé dans l'application ne
-        garantit donc pas la détection des cas hors périmètre.
-        """
-    )
-
-col1, col2 = st.columns(2)
-
-with col1:
-    info_box(
-        """
-        ⚠️ Interprétabilité
-
-        Les analyses Grad-CAM montrent que certaines prédictions peuvent
-        s'appuyer ponctuellement sur des régions qui ne correspondent pas
-        directement aux caractéristiques recherchées.
-        """
-    )
-
-with col2:
-    info_box(
-        """
-        ⚠️ Confusions résiduelles
-
-        Certaines classes visuellement proches restent difficiles à distinguer,
-        notamment pour certaines espèces et maladies.
-        """
-    )
-
+    with col2:
+        with st.container(border=True):
+            st.markdown(limites[i + 1])
 
 st.divider()
-
 
 # =====================================================
 # PERSPECTIVES
@@ -129,7 +108,8 @@ st.divider()
 
 st.subheader("Perspectives")
 
-st.markdown("""
+st.markdown(
+    """
 Les principales pistes d'amélioration concernent :
 
 • **La validation terrain** — tester les modèles sur un ensemble beaucoup plus
@@ -139,21 +119,19 @@ large d'images provenant de conditions d'acquisition et de sources variées.
 par une méthode plus robuste pour identifier les images ne correspondant pas
 aux classes apprises.
 
-
-""")
-
+• **Diversification des données** — enrichir le jeu d'entraînement avec davantage
+d'espèces, de maladies et d'images prises dans des conditions réelles.
+"""
+)
 
 st.divider()
 
-
-success_box(
+info_box(
     """
-    <b>Bilan final</b><br><br>
-    Identifier une plante et détecter une maladie à partir d'une image est
-    réalisable avec une très bonne précision sur les classes connues.
-    <br><br>
-    L'enjeu suivant n'est plus seulement d'améliorer les scores sur des données
-    contrôlées, mais de garantir la robustesse du modèle face à la diversité
-    des situations rencontrées sur le terrain.
-    """
+<b>Bilan final</b><br><br>
+Ce projet montre qu'il est possible d'identifier une plante et de détecter une maladie foliaire à partir d'une simple image lorsque l'espèce appartient au domaine d'apprentissage du modèle.
+<br><br>
+La principale difficulté n'est plus la performance sur le jeu de test, mais la capacité du modèle à reconnaître ses propres limites lorsqu'il est confronté à des situations nouvelles.
+"""
 )
+
