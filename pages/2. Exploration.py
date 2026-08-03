@@ -430,7 +430,7 @@ elif page == pages[1]:
         """
         ✅ Corpus dédupliqué et homogène<br>
         ✅ Aucune segmentation nécessaire<br>
-        ✅ Prétraitement limité au redimensionnement, à la normalisation
+        ✅ Prétraitement limité à la séparation des splits, au redimensionnement, à la normalisation
         et à la gestion du déséquilibre des classes.
         """
     )
