@@ -181,7 +181,7 @@ with tab2:
     # COMPARAISON DES MODÈLES — ACCURACY TEST
     # =====================================================
 
-    st.subheader("Comparaison des modèles — Accuracy test")
+    st.subheader("Comparaison des modèles — F1-score test")
 
     df_accuracy = pd.DataFrame({
         "Modèle": [
@@ -262,7 +262,7 @@ with tab2:
         )
 
         fig_taxons.update_layout(
-            yaxis_title="Accuracy test (%)",
+            yaxis_title="F1-score (%)",
             xaxis_title=None,
             yaxis_range=[0, 100],
             legend_title=None
@@ -287,7 +287,7 @@ with tab2:
             color="Représentation",
             barmode="group",
             text="Accuracy",
-            title="🦠 MALADIES"
+            title="🍃 MALADIES"
         )
 
         fig_maladies.update_traces(
@@ -296,7 +296,7 @@ with tab2:
         )
 
         fig_maladies.update_layout(
-            yaxis_title="Accuracy test (%)",
+            yaxis_title="F1-score (%)",
             xaxis_title=None,
             yaxis_range=[0, 100],
             legend_title=None
@@ -319,7 +319,7 @@ with tab2:
             **XGBoost obtient les meilleures performances sur les deux bases.**
 
             - 🌿 **TAXONS : 85,1 %** avec pixels bruts
-            - 🦠 **MALADIES : 81,4 %** avec les pixels bruts
+            - 🍃 **MALADIES : 81,4 %** avec les pixels bruts
 
             Les modèles linéaires (**régression logistique** et **SGD/SVM**) restent
             nettement en retrait, tandis que **Random Forest** améliore les performances
@@ -379,7 +379,7 @@ with tab2:
     # MALADIES
     # =====================================================
 
-    st.markdown("### 🦠 MALADIES")
+    st.markdown("### 🍃 MALADIES")
 
     col1, col2 = st.columns(2)
 
@@ -463,7 +463,7 @@ with tab3:
             (**85,1 % vs 83,9 %**), même si les deux représentations offrent des
             performances élevées pour distinguer les espèces.
 
-            🦠 **MALADIES :** les **pixels bruts** sont nettement meilleurs
+            🍃 **MALADIES :** les **pixels bruts** sont nettement meilleurs
             (**81,4 % vs 74,3 %**), car HOG préserve moins bien les informations de
             **couleur** et de **texture** caractéristiques des symptômes.
 
@@ -510,7 +510,7 @@ with tab3:
     # MALADIES
     # -----------------------------------------------------
 
-    st.markdown("### 🦠 Classification des maladies")
+    st.markdown("### 🍃 Classification des maladies")
 
     col1, col2 = st.columns(2)
 
