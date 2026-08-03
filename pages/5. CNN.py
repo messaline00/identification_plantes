@@ -426,9 +426,9 @@ with tab_tl:
         fig_taxons = px.bar(
             df_taxons,
             x="Architecture",
-            y="Accuracy Test (%)",
-            text="Accuracy Test (%)",
-            title="Accuracy Test - Classification des taxons",
+            y="F1-score Test (%)",
+            text="F1-score Test (%)",
+            title="F1-score Test - Classification des taxons",
         )
 
         fig_taxons.update_traces(
@@ -438,7 +438,7 @@ with tab_tl:
 
         fig_taxons.update_layout(
             yaxis_range=[95,100],
-            yaxis_title="Accuracy (%)",
+            yaxis_title="F1-score (%)",
             xaxis_title="",
             showlegend=False,
             height=450
@@ -580,9 +580,9 @@ with tab_tl:
         fig_maladies = px.bar(
             df_maladies,
             x="Architecture",
-            y="Accuracy Test (%)",
-            text="Accuracy Test (%)",
-            title="Accuracy Test - Classification des maladies",
+            y="F1-score Test (%)",
+            text="F1-score Test (%)",
+            title="F1-score Test - Classification des maladies",
         )
 
 
@@ -594,7 +594,7 @@ with tab_tl:
 
         fig_maladies.update_layout(
             yaxis_range=[95,100],
-            yaxis_title="Accuracy (%)",
+            yaxis_title="F1-score (%)",
             xaxis_title="",
             showlegend=False,
             height=450
@@ -700,11 +700,11 @@ with tab_conclusion:
 
     info_box(
         """
-        • Le CNN Baseline améliore l'Accuracy de près de **10 points**
+        • Le CNN Baseline améliore le F1 de près de **10 points**
         par rapport à XGBoost. 
 
         • Les modèles de Transfer Learning apportent un gain supplémentaire,
-        atteignant des Accuracy supérieures à **99 %**.
+        atteignant des F1-score supérieurs à **99 %**.
         """
     )
 
