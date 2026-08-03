@@ -307,6 +307,144 @@ with tab2:
             use_container_width=True
         )
 
+        # =====================================================
+# TABLEAUX COMPLETS
+# =====================================================
+
+    st.markdown("### 🌿 TAXONS")
+
+    df_taxons = pd.DataFrame({
+        "Modèle": [
+            "Régression logistique",
+            "Régression logistique",
+            "SGD (hinge)",
+            "SGD (hinge)",
+            "Random Forest",
+            "Random Forest",
+            "XGBoost",
+            "XGBoost"
+        ],
+        "Représentation": [
+            "Pixels bruts",
+            "HOG",
+            "Pixels bruts",
+            "HOG",
+            "Pixels bruts",
+            "HOG",
+            "Pixels bruts",
+            "HOG"
+        ],
+        "Acc. train": [
+            "41,5 %",
+            "54,3 %",
+            "67,8 %",
+            "70,4 %",
+            "99,8 %",
+            "99,9 %",
+            "99,4 %",
+            "99,8 %"
+        ],
+        "Acc. test": [
+            "37,3 %",
+            "53,4 %",
+            "63,1 %",
+            "68,0 %",
+            "71,4 %",
+            "69,8 %",
+            "85,7 %",
+            "85,9 %"
+        ],
+        "F1 test": [
+            "26,4 %",
+            "50,2 %",
+            "59,4 %",
+            "63,5 %",
+            "69,9 %",
+            "68,0 %",
+            "85,1 %",
+            "83,9 %"
+        ]
+    })
+    def style_f1(val):
+        meilleurs = ["85,1 %", "83,9 %"]
+        if val in meilleurs:
+            return "color: green; font-weight: bold;"
+        return ""
+
+    st.dataframe(
+        df_taxons.style.map(style_f1, subset=["F1 test"]),
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+
+    st.markdown("### 🍃 MALADIES")
+
+    df_maladies = pd.DataFrame({
+        "Modèle": [
+            "Régression logistique",
+            "Régression logistique",
+            "SGD (hinge)",
+            "SGD (hinge)",
+            "Random Forest",
+            "Random Forest",
+            "XGBoost",
+            "XGBoost"
+        ],
+        "Représentation": [
+            "Pixels bruts",
+            "HOG",
+            "Pixels bruts",
+            "HOG",
+            "Pixels bruts",
+            "HOG",
+            "Pixels bruts",
+            "HOG"
+        ],
+        "Acc. train": [
+            "39,4 %",
+            "32,8 %",
+            "65,5 %",
+            "65,0 %",
+            "100,0 %",
+            "99,6 %",
+            "100,0 %",
+            "100,0 %"
+        ],
+        "Acc. test": [
+            "33,6 %",
+            "31,0 %",
+            "55,2 %",
+            "59,8 %",
+            "67,4 %",
+            "59,9 %",
+            "82,4 %",
+            "75,5 %"
+        ],
+        "F1 test": [
+            "31,0 %",
+            "28,8 %",
+            "54,6 %",
+            "56,8 %",
+            "66,1 %",
+            "58,0 %",
+            "81,4 %",
+            "74,3 %"
+        ]
+    })
+
+    def style_f1_maladies(val):
+        meilleurs = ["81,4 %", "74,3 %"]
+        if val in meilleurs:
+            return "color: green; font-weight: bold;"
+        return ""
+
+    st.dataframe(
+        df_maladies.style.map(style_f1_maladies, subset=["F1 test"]),
+        use_container_width=True,
+        hide_index=True
+    )
 
     # =====================================================
     # INTERPRÉTATION
