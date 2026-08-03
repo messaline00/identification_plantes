@@ -489,6 +489,10 @@ elif page == pages[1]:
         ✅ Une segmentation HSV explorée mais écartée<br>
         ✅ Prétraitement limité à la répartition stricte des splits, au redimensionnement, à la normalisation et à la gestion du déséquilibre des classes.
         
+        ✅ Corpus dédupliqué et homogène<br>
+        ✅ Aucune segmentation nécessaire<br>
+        ✅ Prétraitement limité à la séparation des splits, au redimensionnement, à la normalisation
+        et à la gestion du déséquilibre des classes.
         """
     )
 
