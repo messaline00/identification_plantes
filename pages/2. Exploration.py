@@ -126,26 +126,7 @@ if page == pages[0]:
         """
     )
 
-    df_sources2 = pd.DataFrame(
-        {
-            "Niveau": [
-                "1",
-                "2",
-            ],
 
-            "Méthode": [
-                "Hash MD5",
-                "Perceptual Hash (pHash)",
-            ],
-
-            "Critère": [
-                "Doublons exacts (fichiers binaires identiques)",
-                "Quasi-doublons (distance de Hamming ≤ 2)",
-            ],
-
-        }
-    )
-    st.dataframe(df_sources2, use_container_width=True, hide_index=True)
 
     kpi_row(
         [
@@ -165,11 +146,6 @@ if page == pages[0]:
                 "value": "- 141",
                 "label": "QUASI-DOUBLONS",
                 "sub": "pHash visuel",
-            },
-            {
-                 "value": "96 165",
-                "label": "BASE FINALE",
-                "sub": "images uniques",
             },
         ]
     )
@@ -203,15 +179,9 @@ if page == pages[0]:
             },
 
             {
-                "value": "100 %",
-                "label": "IMAGES CARRÉES",
-                "sub": "format homogène JPG",
-            },
-
-            {
                 "value": "256×256",
                 "label": "PIXELS",
-                "sub": "résolution unique",
+                "sub": "taille unique",
             },
 
             {
@@ -229,15 +199,9 @@ if page == pages[0]:
 
     st.subheader("Distribution de l'intensité lumineuse")
 
-    st.markdown(
-    """
-    La luminosité moyenne des images a été calculée afin de vérifier
-    l'homogénéité globale des conditions d'acquisition.
-
-    La distribution montre que la majorité des images présentent une exposition
-    correcte, avec très peu d'images extrêmement sombres ou très lumineuses.
-    """
-    )
+    st.markdown("""
+        L'analyse de la luminosité confirme une exposition globalement homogène des images, avec très peu d'images sous- ou surexposées.
+        """)
 
     st.image(
         "images/Exploration/luminosite.png",
@@ -270,12 +234,6 @@ if page == pages[0]:
 
     st.subheader("Exemples d'images du corpus")
 
-    st.markdown(
-    """
-    Quelques exemples illustrant la diversité des espèces et des états sanitaires
-    présents dans le corpus.
-    """
-    )
 
     st.image(
     "images/conditions.png",
@@ -296,14 +254,8 @@ if page == pages[0]:
  
     st.markdown(
         """
-        Dans les approches classiques de vision par ordinateur, une **segmentation
-        HSV** permet d'isoler l'objet d'intérêt.
+        Une segmentation HSV a été testée mais elle n'a pas été retenue en raison du risque de supprimer les symptômes colorés des maladies.
 
-        Pour notre corpus, elle n'est pas nécessaire :
-        
-        - fond uniforme et fort contraste avec la feuille 
-        - risque de supprimer les symptômes colorés (jaune, brun, noir)
-        - les CNN extraient directement les caractéristiques utiles depuis les images RGB.
         """
     )
 
@@ -314,25 +266,6 @@ if page == pages[0]:
             )
 
 
-    # st.divider()
-    # cols = st.columns(4)
-
-    # # images = [
-    # #     ("images/Exploration/ex1.jpg", "Tomate saine"),
-    # #     ("images/Exploration/ex2.jpg", "Pommier - Rouille"),
-    # #     ("images/Exploration/ex3.jpg", "Maïs - Cercospora"),
-    # #     ("images/Exploration/ex4.jpg", "Pêcher sain"),
-    # # ]
-
-    # for col, (img, cap) in zip(cols, images):
-    #     with col:
-    #         st.image(img, caption=cap, use_container_width=True)
-
-
-    # =====================================================
-    # BASES GÉNÉRÉES
-    # =====================================================
-   
 # =====================================================
 # BASE TAXONS
 # =====================================================
@@ -444,7 +377,7 @@ elif page == pages[1]:
 
     with col2:
 
-        st.markdown("### 🦠 Base_MALADIES")
+        st.markdown("### 🍃 Base_MALADIES")
 
         st.markdown(
             """
@@ -511,13 +444,8 @@ elif page == pages[1]:
 
 
 
-    success_box(
-        """
-        ✅ Corpus dédupliqué et homogène 256x256 sans correction de luminosité ni de couleur nécessaire.<br>
-        ✅ Une segmentation HSV explorée mais écartée<br>
-        ✅ Prétraitement limité à la répartition rigoureuse des splits, au redimensionnement, à la normalisation et à la gestion du déséquilibre des classes.
-      
-        """
-    )
+    info_box(
+    "Les analyses exploratoires valident la qualité du corpus et justifient un prétraitement standard avant la phase de modélisation."
+)
 
     
