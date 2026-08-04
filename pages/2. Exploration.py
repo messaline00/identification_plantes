@@ -122,7 +122,7 @@ if page == pages[0]:
         """
         Une partie de la base <b>New Plant Diseases</b> contient des images très
         proches visuellement, compatibles avec la présence d'images issues
-        d'une augmentation de données (<i>data augmentation</i>).
+        d'une augmentation de données (<i>**data augmentation**</i>).
         """
     )
 
@@ -285,11 +285,36 @@ if page == pages[0]:
 
     st.markdown(
         """
-        Une dominante verte homogène - cohérente avec des images de feuilles.
-        Toutes les images ont été prises en conditions de laboratoire. 
+        Une **dominante verte homogène** - cohérente avec des images de feuilles.
+        Toutes les images ont été prises en conditions de laboratoire sur un fond gris homogène. 
         """
         )
 
+
+    st.subheader("Segmentation HSV")
+
+ 
+    st.markdown(
+        """
+        Dans les approches classiques de vision par ordinateur, une **segmentation
+        HSV** permet d'isoler l'objet d'intérêt.
+
+        Pour notre corpus, elle n'est pas nécessaire :
+        
+        - fond uniforme et fort contraste avec la feuille 
+        - risque de supprimer les symptômes colorés (jaune, brun, noir)
+        - les CNN extraient directement les caractéristiques utiles depuis les images RGB.
+        """
+    )
+
+    st.image(
+                "images/Exploration/HSV.png",
+                caption="Exemple de segmentation HSV",
+                use_container_width=True
+            )
+
+
+    # st.divider()
     # cols = st.columns(4)
 
     # # images = [
@@ -341,9 +366,9 @@ elif page == pages[1]:
     
     st.write(
             """
-            Les deux bases partagent exactement les **mêmes images**, mais
+            Les deux bases partagent exactement les **mêmes 96 165 images**, mais
             disposent d'un **étiquetage différent** selon la tâche de
-            classification (taxons ou maladies).
+            classification.
             """
     )
 
@@ -374,6 +399,9 @@ elif page == pages[1]:
         st.markdown("### 🌿 Base_TAXONS")
         st.markdown(
             """ 
+            &nbsp;
+            &nbsp;
+
             **Objectif**  
             Reconnaître l'espèce végétale.
 
@@ -428,12 +456,12 @@ elif page == pages[1]:
 
             **Difficulté principale**  
             Variabilité importante des symptômes visibles
-
+            
             **Classe majoritaire**  
-            Orange — citrus greening : 5 507 images
+            Orange_citrus greening : 5 507 images
 
             **Classe minoritaire**  
-            Maïs — cercospora : 2 052 images
+            Maïs_cercospora : 2 052 images
 
             **Ratio modéré**  
             2,7 ×
@@ -455,8 +483,8 @@ elif page == pages[1]:
 
     # st.subheader("Segmentation HSV")
 
-
-    # st.markdown(
+ 
+   # st.markdown(
     #     """
     #     Dans les approches classiques de vision par ordinateur, une segmentation
     #     HSV permet d'isoler l'objet d'intérêt.
@@ -487,12 +515,8 @@ elif page == pages[1]:
         """
         ✅ Corpus dédupliqué et homogène 256x256 sans correction de luminosité ni de couleur nécessaire.<br>
         ✅ Une segmentation HSV explorée mais écartée<br>
-        ✅ Prétraitement limité à la répartition stricte des splits, au redimensionnement, à la normalisation et à la gestion du déséquilibre des classes.
-        
-        ✅ Corpus dédupliqué et homogène<br>
-        ✅ Aucune segmentation nécessaire<br>
-        ✅ Prétraitement limité à la séparation des splits, au redimensionnement, à la normalisation
-        et à la gestion du déséquilibre des classes.
+        ✅ Prétraitement limité à la répartition rigoureuse des splits, au redimensionnement, à la normalisation et à la gestion du déséquilibre des classes.
+      
         """
     )
 
